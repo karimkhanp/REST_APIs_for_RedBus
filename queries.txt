@@ -1,0 +1,6 @@
+http://localhost/safari/REST_APIs_for_RedBus/main.php?getBoardingPoint=true&city=15
+http://localhost/safari/REST_APIs_for_RedBus/main.php?getDropingPoint=true&city=delhi
+http://localhost/safari/REST_APIs_for_RedBus/main.php?getAvailRout=true
+http://localhost/safari/REST_APIs_for_RedBus/main.php?getsourcetodest=true
+http://localhost/safari/REST_APIs_for_RedBus/main.php?getcity=true
+http://localhost/safari/REST_APIs_for_RedBus/main.php?getbranch=true
