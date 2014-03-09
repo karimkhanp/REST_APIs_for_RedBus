@@ -55,6 +55,62 @@
 		}
 	}
 
+	if(isset($_GET['book_ticket']))
+	{
+		$book_ticket = mysql_real_escape_string($_GET['book_ticket']);
+		//echo $book_ticket;
+		$userid = mysql_real_escape_string($_GET['userid']);
+		$from = mysql_real_escape_string($_GET['from']);
+		$to = mysql_real_escape_string($_GET['to']);
+		$seats = mysql_real_escape_string($_GET['seats']);
+		$date = mysql_real_escape_string($_GET['date']);
+		$email = mysql_real_escape_string($_GET['email']);
+		$pnr = getPnr();
+		echo "You pnr num is : $pnr <br>";
+		echo "Check you mail and save it for future use";
+		if($book_ticket == 'true')
+		{
+			DoTentativeBooking($userid,$book_ticket,$from,$to,$date,$pnr,$seats,$email);
+
+		}
+
+	}
+
+	function DoTentativeBooking($userid,$book_ticket,$from,$to,$date,$pnr,$seats,$email)
+	{
+			$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');				
+			if (mysqli_connect_errno())
+			{
+				echo "Failed to connect to MySQL: " . mysqli_connect_error();
+				return;
+			}
+			$insertQuery1 = "INSERT INTO tbl_user(`user_id`,`book_ticket`,`from`,`to`,`date`,`user_pnr`,`seat`,`email`) VALUES ('".$userid."','".$book_ticket."','".$from."','".$to."','".$date."','".$pnr."','".$seats."','".$email."')";
+			if (!mysqli_query($con,$insertQuery1))
+		  		{
+		  		//	die('Error: ' . mysqli_error($con));
+					echo "error";
+				}		
+			return;
+	
+	}
+	
+	function getPnr()
+	{
+		$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');
+		if (mysqli_connect_errno())
+		{
+		    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		    return;
+		}
+		$pnr = mt_rand(1111111111, 99999999999);				
+		$result = mysqli_query($con,"SELECT user_pnr from tbl_user where user_pnr = '".$pnr."'");
+		if(mysqli_num_rows($result)>0)
+			getPnr();
+		else
+			return $pnr;
+	}
+	
+
 	function getbranch($getbranch)
 	{
 		$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');
