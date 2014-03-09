@@ -1,6 +1,25 @@
-http://localhost/safari/REST_APIs_for_RedBus/main.php?getBoardingPoint=true&city=15
-http://localhost/safari/REST_APIs_for_RedBus/main.php?getDropingPoint=true&city=delhi
-http://localhost/safari/REST_APIs_for_RedBus/main.php?getAvailRout=true
-http://localhost/safari/REST_APIs_for_RedBus/main.php?getsourcetodest=true
-http://localhost/safari/REST_APIs_for_RedBus/main.php?getcity=true
-http://localhost/safari/REST_APIs_for_RedBus/main.php?getbranch=true
+Get boarding point - 
+	http://localhost/safari/REST_APIs_for_RedBus/main.php?getBoardingPoint=true&city=15
+Get droping point -
+	http://localhost/safari/REST_APIs_for_RedBus/main.php?getDropingPoint=true&city=delhi
+Get available root -
+	http://localhost/safari/REST_APIs_for_RedBus/main.php?getAvailRout=true
+get source to det -
+	http://localhost/safari/REST_APIs_for_RedBus/main.php?getsourcetodest=true
+Get city list - 
+	http://localhost/safari/REST_APIs_for_RedBus/main.php?getcity=true
+Get branch list - 
+	http://localhost/safari/REST_APIs_for_RedBus/main.php?getbranch=true
+Check ticket confirmed or not - 
+	http://localhost/safari/REST_APIs_for_RedBus/main.php?isconfirm=true&user_id=23
+Cancel ticket for given pnr and userid - 
+	http://localhost/safari/REST_APIs_for_RedBus/main.php?cancelticket=true&user_id=23&user_pnr=1131615384
+check ticket confirmed - 
+	http://localhost/safari/REST_APIs_for_RedBus/main.php?doconfirm=true&user_id=23
+Book ticket - 
+	http://localhost/safari/REST_APIs_for_RedBus/main.php?book_ticket=true&email=karimkhan_it@yaho.com&date=21121989&seats=4&userid=24&from=abad&to=del
+check whether ticket cancellable - 
+	http://localhost/safari/REST_APIs_for_RedBus/main.php?isticketcancellable=true&user_id=23&user_pnr=1131615384
+Cancel the ticket for given pnr and userid - 
+	http://localhost/safari/REST_APIs_for_RedBus/main.php?cancelticket=true&user_id=23&user_pnr=1131615384
+
