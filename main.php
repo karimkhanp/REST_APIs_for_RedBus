@@ -30,29 +30,44 @@
 	if(isset($_GET['getAvailRout']))
 	{
 		$getAvailRout = $_GET['getAvailRout'];
+		$source = $_GET['source'];
+		$destination = $_GET['destination'];
 		if($getAvailRout == 'true')
 		{
-			getAvailRout($getAvailRout);
+			getAvailRout($getAvailRout,$source,$destination);
+		}
+	}
+
+	if(isset($_GET['getroutdetails']))
+	{
+		$routeDetails = $_GET['getroutdetails'];
+		$routeid = $_GET['routeid'];
+ 
+		if($routeDetails == 'true')
+		{
+			routeDetails($routeid);
 		}
 	}
 
 	if(isset($_GET['getBoardingPoint']))
 	{
 		$getBoardingPoint = $_GET['getBoardingPoint'];
-		$city = $_GET['city'];
+		$source = $_GET['source'];
+		$destination = $_GET['destination'];
 		if($getBoardingPoint == 'true')
 		{
-			getBoardingPoint($getBoardingPoint,$city);
+			getBoardingPoint($getBoardingPoint,$source,$destination);
 		}
 	}
 
 	if(isset($_GET['getDropingPoint']))
 	{
-		$getDropingPoint = $_GET['getDropingPoint'];
-		$city = $_GET['city'];
+		$getDropingPoint = $_GET['getDropingPoint'];		
+		$source = $_GET['source'];
+		$destination = $_GET['destination'];
 		if($getDropingPoint == 'true')
 		{
-			getDropingPoint($getDropingPoint,$city);
+			getDropingPoint($getDropingPoint,$source,$destination);
 		}
 	}
 
@@ -60,9 +75,10 @@
 	{
 		$doConfirm = $_GET['doconfirm'];
 		$user_id = $_GET['user_id'];
+		$user_pnr = $_GET['user_pnr'];
 		if($doConfirm == 'true')
 		{
-			doConfirm($user_id);
+			doConfirm($user_id,$user_pnr);
 		}
 	}
 
@@ -177,7 +193,7 @@
 				echo "You can proceed to cancel ..";
 	}
 
-	function doConfirm($user_id)
+	function doConfirm($user_id,$user_pnr)
 	{
 			$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');				
 			if (mysqli_connect_errno())
@@ -185,7 +201,7 @@
 				echo "Failed to connect to MySQL: " . mysqli_connect_error();
 				return;
 			}
-			$result = mysqli_query($con,"select * from tbl_user where user_id = '".$user_id."' AND isConfirm = 'No' ");
+			$result = mysqli_query($con,"select * from tbl_user where user_id = '".$user_id."' AND user_pnr = '".$user_pnr."' AND isConfirm = 'No' ");
 			if(mysqli_num_rows($result)>0)
 			{			
 				while ($row = @mysqli_fetch_array($result))
@@ -264,7 +280,27 @@
 		else
 			return $pnr;
 	}
-	
+
+	function routeDetails($routid)
+	{
+		$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');
+		if (mysqli_connect_errno())
+		{
+		    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		    return;
+		}   
+		$today = date("Ymd");           
+		
+	//	echo $routDetails;
+		$result1 = array();
+		$result = mysqli_query($con,"SELECT * from tbl_routdetails where routeid = '".$routid."'");
+		while ($row = @mysqli_fetch_array($result))
+		{
+			array_push($result1,$row);echo $routid;
+		}
+		echo $result1 = json_encode($result1);  
+		
+	}	
 
 	function getbranch($getbranch)
 	{
@@ -322,7 +358,7 @@
 		echo  $result1 = json_encode($result1,true);  
 	}
 
-	function getAvailRout($getAvailRout)
+	function getAvailRout($getAvailRout,$source,$destination)
 	{
 
 		$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');
@@ -333,7 +369,7 @@
 		}   
 		$today = date("Ymd");           
 		$result1 = array();
-		$result = mysqli_query($con,"SELECT sno,source,routename from tbl_newbusroute where status = 'active'");
+		$result = mysqli_query($con,"SELECT sno,source,routename from tbl_newbusroute where status = 'active' AND source = '".$source."' AND destination = '".$destination."'");
 		while ($row = @mysqli_fetch_array($result))
 		{	
 			array_push($result1,$row);
@@ -341,7 +377,7 @@
 		echo  $result1 = json_encode($result1,true);  
 	}
 
-	function getBoardingPoint($getBoardingPoint,$city)
+	function getBoardingPoint($getBoardingPoint,$source,$destination)
 	{
 
 		$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');
@@ -353,7 +389,7 @@
 		$today = date("Ymd");           
 		$result1 = array();
 		//echo $city;
-		$result = mysqli_query($con,"SELECT * from tbl_service_boarding where station_name = '".$city."'");
+		$result = mysqli_query($con,"SELECT * from tbl_boardingpoint where source = '".$source."' AND destination = '".$destination."'");
 		while ($row = @mysqli_fetch_array($result))
 		{	
 			array_push($result1,$row);
@@ -362,7 +398,7 @@
 		echo  $result1 = json_encode($result1,true);  
 	}
 
-	function getDropingPoint($getDropingPoint,$city)
+	function getDropingPoint($getDropingPoint,$source,$destination)
 	{
 
 		$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');
@@ -373,13 +409,17 @@
 		}   
 		$today = date("Ymd");           
 		$result1 = array();
-		$result = mysqli_query($con,"SELECT * from tbl_service_droping where station_name = '".$city."'");
+		//echo $city;		
+
+		$result = mysqli_query($con,"SELECT * from tbl_service_droping where source = '".$source."' AND destination = '".$destination."'");
 		while ($row = @mysqli_fetch_array($result))
 		{	
 			array_push($result1,$row);
+			//echo "hi";
 		}
-		echo  $result1 = json_encode($result1,true);  
+		echo  $result1 = json_encode($result1,true);   
 	}
 	//echo $_GET['location'];
 	
 ?>
+
