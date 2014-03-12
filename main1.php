@@ -125,48 +125,10 @@
 		}
 	}
 
-	if(isset($_GET['getseatlayout']))
-	{
-		$getseatlayout = $_GET['getseatlayout'];
-		$seattype = $_GET['seattype'];
-		$iswindow = $_GET['iswindow'];
-		$source = $_GET['source'];
-		$destination = $_GET['destination'];
-		$xpos = $_GET['xpos'];
-		$ypos = $_GET['ypos'];
-		$seatwidth = $_GET['seatwidth'];
-		$seatheight = $_GET['seatheight'];
-		$seatname = $_GET['seatname'];
-
-		if($getseatlayout == 'true')
-		{
-			getSeatLayout($seattype,$iswindow,$source,$destination,$xpos,$ypos,$seatwidth,$seatheight,$seatname);
-		}
-	}
-
-	function getSeatLayout($seattype,$iswindow,$source,$destination,$xpos,$ypos,$seatwidth,$seatheight,$seatname)
-	{
-
-			$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');				
-			if (mysqli_connect_errno())
-			{
-				echo "Failed to connect to MySQL: " . mysqli_connect_error();
-				return;
-			}		
-			$result = mysqli_query($con,"select seatname,seat_sub_num,category,seat_width,seat_height,seatpos_x,seatpos_y,iswindow from tbl_bustype where source = '".$source."' AND destination = '".$destination."' AND iswindow = '".$iswindow."' AND seatname = '".$seatname."' AND seattype = '".$seattype."' AND seat_height = '".$seatheight."' AND seat_width = '".$seatwidth."' AND seatpos_x = '".$xpos."' AND seatpos_y = '".$ypos."' ");
-			$result1 = array();
-			while ($row = @mysqli_fetch_array($result))
-			{
-				array_push($result1,$row);
-			}
-			echo $result1 = json_encode($result1);  
-			
-	}
-
 	function cancelTicket($user_id,$user_pnr)
 	{
 
-		$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');				
+		$con = mysqli_connect('50.62.209.38:3306', 'saffari', 'Jxuv62&3', 'venkat07_saffari');				
 		if (mysqli_connect_errno())
 		{
 			echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -212,7 +174,7 @@
 
 	function isTicketCancellable($user_id,$user_pnr)
 	{
-			$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');				
+			$con = mysqli_connect('50.62.209.38:3306', 'saffari', 'Jxuv62&3', 'venkat07_saffari');				
 			if (mysqli_connect_errno())
 			{
 				echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -233,7 +195,7 @@
 
 	function doConfirm($user_id,$user_pnr)
 	{
-			$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');				
+			$con = mysqli_connect('50.62.209.38:3306', 'saffari', 'Jxuv62&3', 'venkat07_saffari');				
 			if (mysqli_connect_errno())
 			{
 				echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -261,7 +223,7 @@
 		$amount = $seat * 200;
 		//Select seats from list of vacant seatas
 		$seat_no = '4,5';
-			$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');				
+			$con = mysqli_connect('50.62.209.38:3306', 'saffari', 'Jxuv62&3', 'venkat07_saffari');				
 			if (mysqli_connect_errno())
 			{
 				echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -287,7 +249,7 @@
 
 	function DoTentativeBooking($userid,$book_ticket,$from,$to,$date,$pnr,$seats,$email)
 	{
-			$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');				
+			$con = mysqli_connect('50.62.209.38:3306', 'saffari', 'Jxuv62&3', 'venkat07_saffari');				
 			if (mysqli_connect_errno())
 			{
 				echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -305,7 +267,7 @@
 	
 	function getPnr()
 	{
-		$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');
+		$con = mysqli_connect('50.62.209.38:3306', 'saffari', 'Jxuv62&3', 'venkat07_saffari');
 		if (mysqli_connect_errno())
 		{
 		    echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -321,7 +283,7 @@
 
 	function routeDetails($routid)
 	{
-		$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');
+		$con = mysqli_connect('50.62.209.38:3306', 'saffari', 'Jxuv62&3', 'venkat07_saffari');
 		if (mysqli_connect_errno())
 		{
 		    echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -331,7 +293,7 @@
 		
 	//	echo $routDetails;
 		$result1 = array();
-		$result = mysqli_query($con,"SELECT * from tbl_routdetails where routeid = '".$routid."'");
+		$result = mysqli_query($con,"SELECT a.sno,a.service_name as ServiceName ,e.start_time as Depature,e.reach_time as Arrival  from tbl_service as a,tbl_newbusroute as b,tbl_newstation as c,tbl_newstation as d,tbl_newbusroute as f,tbl_fair as e where a.status = 'active' and a.route=b.sno and b.source=c.sno and b.destination=d.sno and b.source=e.source and b.destination=e.destination and a.sno=e.service_id");
 		while ($row = @mysqli_fetch_array($result))
 		{
 			array_push($result1,$row);echo $routid;
@@ -342,7 +304,7 @@
 
 	function getbranch($getbranch)
 	{
-		$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');
+		$con = mysqli_connect('50.62.209.38:3306', 'saffari', 'Jxuv62&3', 'venkat07_saffari');
 		if (mysqli_connect_errno())
 		{
 		    echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -361,7 +323,7 @@
 
 	function getcity($getcity)
 	{
-		$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');
+		$con = mysqli_connect('50.62.209.38:3306', 'saffari', 'Jxuv62&3', 'venkat07_saffari');
 		if (mysqli_connect_errno())
 		{
 		    echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -369,7 +331,7 @@
 		}   
 		$today = date("Ymd");           
 		$result1 = array();
-		$result = mysqli_query($con,"SELECT sno,city,status from tbl_demo");
+		$result = mysqli_query($con,"SELECT sno,stationname,status from  tbl_newstation");
 		while ($row = @mysqli_fetch_array($result))
 		{
 			array_push($result1,$row);
@@ -380,7 +342,7 @@
 	function getsourcetodest($getsourcetodest)
 	{
 
-		$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');
+		$con = mysqli_connect('50.62.209.38:3306', 'saffari', 'Jxuv62&3', 'venkat07_saffari');
 		if (mysqli_connect_errno())
 		{
 		    echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -388,7 +350,7 @@
 		}   
 		$today = date("Ymd");           
 		$result1 = array();
-		$result = mysqli_query($con,"SELECT * from tbl_newbusroute");
+		$result = mysqli_query($con,"SELECT a.sno,b.stationname as Source,c.stationname as Destination  from tbl_newbusroute as a,tbl_newstation as b,tbl_newstation as c where a.source=b.sno and a.destination=c.sno ");
 		while ($row = @mysqli_fetch_array($result))
 		{	
 			array_push($result1,$row);
@@ -399,7 +361,7 @@
 	function getAvailRout($getAvailRout,$source,$destination)
 	{
 
-		$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');
+		$con = mysqli_connect('50.62.209.38:3306', 'saffari', 'Jxuv62&3', 'venkat07_saffari');
 		if (mysqli_connect_errno())
 		{
 		    echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -407,7 +369,7 @@
 		}   
 		$today = date("Ymd");           
 		$result1 = array();
-		$result = mysqli_query($con,"SELECT sno,source,routename from tbl_newbusroute where status = 'active' AND source = '".$source."' AND destination = '".$destination."'");
+			$result = mysqli_query($con,"SELECT a.sno,a.service_name as ServiceName,c.stationname as Source,d.stationname as Destination from tbl_service as a,tbl_newbusroute as b,tbl_newstation as c,tbl_newstation as d where a.status = 'active' and a.route=b.sno and b.source=c.sno and b.destination=d.sno");
 		while ($row = @mysqli_fetch_array($result))
 		{	
 			array_push($result1,$row);
@@ -418,7 +380,7 @@
 	function getBoardingPoint($getBoardingPoint,$source,$destination)
 	{
 
-		$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');
+		$con = mysqli_connect('50.62.209.38:3306', 'saffari', 'Jxuv62&3', 'venkat07_saffari');
 		if (mysqli_connect_errno())
 		{
 		    echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -427,7 +389,7 @@
 		$today = date("Ymd");           
 		$result1 = array();
 		//echo $city;
-		$result = mysqli_query($con,"SELECT * from tbl_boardingpoint where source = '".$source."' AND destination = '".$destination."'");
+		$result = mysqli_query($con,"SELECT a.boardingpointname,a.address,a.landmark,b.service_name as Servicename FROM  tbl_boardingpoint as a,tbl_service as b,tbl_service_boarding as c where c.servic_id=b.sno and c.boarding_points=a.sno");
 		while ($row = @mysqli_fetch_array($result))
 		{	
 			array_push($result1,$row);
@@ -439,7 +401,7 @@
 	function getDropingPoint($getDropingPoint,$source,$destination)
 	{
 
-		$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');
+		$con = mysqli_connect('50.62.209.38:3306', 'saffari', 'Jxuv62&3', 'venkat07_saffari');
 		if (mysqli_connect_errno())
 		{
 		    echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -449,7 +411,7 @@
 		$result1 = array();
 		//echo $city;		
 
-		$result = mysqli_query($con,"SELECT * from tbl_service_droping where source = '".$source."' AND destination = '".$destination."'");
+		$result = mysqli_query($con,"SELECT a.boardingpointname,a.address,a.landmark,b.service_name as Servicename FROM  tbl_boardingpoint as a,tbl_service as b,tbl_service_droping as c where c.servic_id=b.sno and c.boarding_points=a.sno");
 		while ($row = @mysqli_fetch_array($result))
 		{	
 			array_push($result1,$row);

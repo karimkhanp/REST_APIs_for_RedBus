@@ -9,7 +9,31 @@ Get droping point - It provides list of available dropping points  between a giv
 
 Get available root - It provides list of available routes  between a given source , destination and DOJ. User has to provide source, and destination name with date.
 	http://localhost/safari/REST_APIs_for_RedBus/main.php?getAvailRout=true&source=15&destination=16
+-----
+1. Get seat layout - 
+		http://localhost/safari/REST_APIs_for_RedBus/main2.php?getbusmap=true&seattype=2-2&iswindow=yes&source=pune&destination=delhi&xpos=0&ypos=3&seatwidth=40&seatheight=100&seatname=row2
 
+2.	Getsearch result 1
+
+		http://localhost/safari/REST_APIs_for_RedBus/main2.php?getsearchresult=true&query1=true&from=15&to=16
+	Getsearch result 2
+		http://localhost/safari/REST_APIs_for_RedBus/main2.php?getsearchresult=true&query2=true&serviceid=15&travel_from=2014-02-25&travel_to=2014-03-31&serviceid=2
+
+	getsearchresult 3
+		http://localhost/safari/REST_APIs_for_RedBus/main2.php?getsearchresult=true&query3=true&travel_from=0000-00-00&travel_to=0000-00-00&serviceid=3&from=15&to=16
+
+3. Is user block - Block user(I did not receive exact criteria for this query, so proceeded in this way.)
+		http://localhost/safari/REST_APIs_for_RedBus/main2.php?isblock=true&userloginid=para3730
+
+4. IS cancel - Check whether ticket is cancelled or not
+		http://localhost/safari/REST_APIs_for_RedBus/main2.php?iscancel=true&service_id=1&ticketnumber=SA000
+
+5. Confirm ticket - User provides userid and pnr to confirm the ticket
+		http://localhost/safari/REST_APIs_for_RedBus/main.php?doconfirm=true&user_id=23&user_pnr=1131615384
+
+6. Confirm cancel - Cancel the ticket for given userid and pnr numner
+		http://localhost/safari/REST_APIs_for_RedBus/main.php?cancelticket=true&user_id=23&user_pnr=1131615384
+---
 get source to destination - The list of all source, destination city pairs that are valid operator routes. 
 	http://localhost/safari/REST_APIs_for_RedBus/main.php?getsourcetodest=true
 
