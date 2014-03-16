@@ -59,6 +59,7 @@
 
 	}
 
+
 	if(isset($_GET['isticketcancellable']))
 	{
 		$isticketcancellable = $_GET['isticketcancellable'];
@@ -78,6 +79,17 @@
 		if($cancelticket == 'true')
 		{
 			cancelTicket($user_id,$user_pnr);
+		}
+	}
+
+	if(isset($_GET['getAvailRout']))
+	{
+		$getAvailRout = $_GET['getAvailRout'];
+		$source = $_GET['source'];
+		$destination = $_GET['destination'];
+		if($getAvailRout == 'true')
+		{
+			getAvailRout($getAvailRout,$source,$destination);
 		}
 	}
 
@@ -160,6 +172,106 @@
 			isCancel($service_id,$ticketnumber);
 		}
 	}
+
+	if(isset($_GET['getroutdetails']))
+	{
+		$routeDetails = $_GET['getroutdetails'];
+		$routeid = $_GET['routeid'];
+ 
+		if($routeDetails == 'true')
+		{
+			routeDetails($routeid);
+		}
+	}
+
+	if(isset($_GET['getBoardingPoint']))
+	{
+		$getBoardingPoint = $_GET['getBoardingPoint'];
+		$station = $_GET['station'];
+
+		if($getBoardingPoint == 'true')
+		{
+			getBoardingPoint($getBoardingPoint,$station);
+		}
+	}
+
+	if(isset($_GET['getDropingPoint']))
+	{
+		$getDropingPoint = $_GET['getDropingPoint'];		
+		$station_name = $_GET['station_name'];
+		if($getDropingPoint == 'true')
+		{
+			getDropingPoint($getDropingPoint,$station_name);
+		}
+	}
+
+	function getDropingPoint($getDropingPoint,$station_name)
+	{
+
+		$con = mysqli_connect('127.0.0.1', 'root', '', 'safarinew');
+		if (mysqli_connect_errno())
+		{
+		    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		    return;
+		}   
+		$today = date("Ymd");           
+		$result1 = array();
+		//echo $city;		
+
+		$result = mysqli_query($con,"SELECT droping_points from tbl_service_droping where station_name = '".$station_name."' ");
+		while ($row = @mysqli_fetch_row($result))
+		{	
+			array_push($result1,$row);
+			//echo "hi";
+		}
+		echo  $result1 = json_encode($result1,true);   
+	}
+
+
+
+	function getBoardingPoint($getBoardingPoint,$station)
+	{
+
+		$con = mysqli_connect('127.0.0.1', 'root', '', 'safarinew');
+		if (mysqli_connect_errno())
+		{
+		    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		    return;
+		}   
+		$today = date("Ymd");           
+		$result1 = array();
+		//echo $city;
+		$result = mysqli_query($con,"SELECT boardingpointname from tbl_boardingpoint where station = '".$station."'");
+		while ($row = @mysqli_fetch_row($result))
+		{	
+			array_push($result1,$row);
+			//echo "hi";
+		}
+		echo  $result1 = json_encode($result1,true);  
+	}
+
+
+	function routeDetails($routid)
+	{
+		$con = mysqli_connect('127.0.0.1', 'root', '', 'safarinew');
+		if (mysqli_connect_errno())
+		{
+		    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		    return;
+		}   
+		$today = date("Ymd");           
+		
+	//	echo $routDetails;
+		$result1 = array();
+		$result = mysqli_query($con,"SELECT * from tbl_routdetails where routeid = '".$routid."'");
+		while ($row = @mysqli_fetch_row($result))
+		{
+			array_push($result1,$row);
+		}
+		echo $result1 = json_encode($result1);  
+		
+	}	
+
 
 	function isCancel($service_id,$ticketnumber)
 	{
@@ -257,7 +369,7 @@
 	function getBusMap($seattype,$iswindow,$source,$destination,$xpos,$ypos,$seatwidth,$seatheight,$seatname)
 	{
 
-			$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');				
+			$con = mysqli_connect('127.0.0.1', 'root', '', 'safarinew');				
 			if (mysqli_connect_errno())
 			{
 				echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -480,6 +592,25 @@
 		$today = date("Ymd");           
 		$result1 = array();
 		$result = mysqli_query($con,"SELECT a.sourceId,a.destinationId  from tbl_newbusroute as a,tbl_newstation as b,tbl_newstation as c where a.source=b.stationId and a.destination=c.stationId ");
+		while ($row = @mysqli_fetch_row($result))
+		{	
+			array_push($result1,$row);
+		}
+		echo  $result1 = json_encode($result1,true);  
+	}
+
+	function getAvailRout($getAvailRout,$source,$destination)
+	{
+
+		$con = mysqli_connect('127.0.0.1', 'root', '', 'safari');
+		if (mysqli_connect_errno())
+		{
+		    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		    return;
+		}   
+		$today = date("Ymd");           
+		$result1 = array();
+		$result = mysqli_query($con,"SELECT sno,source,routename from tbl_newbusroute where status = 'active' AND source = '".$source."' AND destination = '".$destination."'");
 		while ($row = @mysqli_fetch_row($result))
 		{	
 			array_push($result1,$row);

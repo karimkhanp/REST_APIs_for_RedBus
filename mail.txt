@@ -1,0 +1,20 @@
+Please see to the vendor doc that we've sent initially. I've explained for the bus layout
+
+
+bus layout is searched based on these parameters:
+
+
+Step 1:
+Source to destination: (In tbl_fair)
+
+Step 2:
+see the service Id in tbl_fair then go to tbl_service and sync the serial number
+
+Step 3:
+see to the layout field in the tbl_service and sync that with the sno field in the tbl_lower
+
+Step 4:
+see to the serial number in the tbl_lower and sync with the layout id in the tbl_newlayout
+
+Result:
+The result should be the seatno,seattype 

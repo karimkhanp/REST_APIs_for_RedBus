@@ -370,7 +370,7 @@
 		$today = date("Ymd");           
 		$result1 = array();
 			$result = mysqli_query($con,"SELECT a.sno,a.service_name as ServiceName,c.stationname as Source,d.stationname as Destination from tbl_service as a,tbl_newbusroute as b,tbl_newstation as c,tbl_newstation as d where a.status = 'active' and a.route=b.sno and b.source=c.sno and b.destination=d.sno");
-		while ($row = @mysqli_fetch_array($result))
+		while ($row = @mysqli_fetch_row($result))
 		{	
 			array_push($result1,$row);
 		}
