@@ -1,3 +1,13 @@
+SELECT a.seatno AS seatno, a.availability AS avaibility, a.type AS
+TYPE , b.from_date AS DOJ, c.bustype AS bus_type
+FROM tbl_newlayout AS a, tbl_fair AS b, tbl_bustype AS c
+WHERE a.sno = b.sno
+AND b.sno = c.sno
+AND b.source =15
+AND b.destination =13
+LIMIT 0 , 30
+
+
 *** Below changes have been done.
 1.    GetAllCities():
 http://ustwebstudio.com/saffari/main1.php?getcity=true

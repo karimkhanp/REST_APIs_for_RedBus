@@ -1,3 +1,20 @@
+ THis is for Ticketgoose.
+
+Please take it little fastly.
+
+need additional details in 
+
+GetSearchResult.
+Available seats, Bus Type
+
+
+in Busmap call
+
+Boarding point & address,Dropping Point ,seat fare,seat status,cancellation term,
+
+--------------------------------------------------------------------------
+
+
 Here is set of quries as per the API document. User needs to provided appropriate parameters in URL in specific format to get the API response.
 Here we have given some test quries for convenient.
 

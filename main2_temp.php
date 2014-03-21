@@ -313,6 +313,7 @@
 
 	function getSearchResult3($from,$to,$serviceid,$travel_from,$travel_to)
 	{
+
 			$con = mysqli_connect('127.0.0.1', 'root', '', 'safarinew');				
 			if (mysqli_connect_errno())
 			{
@@ -320,10 +321,9 @@
 				return;
 			}
 			$result1 = array();
-			$result = mysqli_query($con,"SELECT a.source,a.destination,a.seat_fare,a.start_time,a.reach_time,a.day,a.service_id,a.from_date,a.to_date,b.availability,b.bustype  FROM tbl_fair as a, tbl_newlayout as b where a.sno='".$serviceid."' and  a.from_date >='".$travel_from."' and a.to_date <='".$travel_to."' AND a.source = '".$from."' AND a.destination = '".$to."' and a.sno = b.sno ");
+			$result = mysqli_query($con,"SELECT a.source,a.destination,a.seat_fare,a.start_time,a.reach_time,a.day,a.service_id,a.from_date,a.to_date,b.availability,b.type  FROM tbl_fair as a, tbl_newlayout as b where a.sno='".$serviceid."' and a.from_date >='".$travel_from."' and a.to_date <='".$travel_to."' AND a.source = '".$from."' AND a.destination = '".$to."' and a.sno = b.sno ");
 			while ($row = @mysqli_fetch_row($result))
 			{
-				echo "df";
 				array_push($result1,$row);
 			}
 			echo $result1 = json_encode($result1);  
